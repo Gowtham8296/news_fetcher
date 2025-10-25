@@ -27,6 +27,10 @@ public class utilities {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.visibilityOf(locator));
     }
+    public static void Wait(WebDriver driver, int seconds) throws InterruptedException {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(seconds));
+    }
+
     public static void sendValueToSearchField(WebDriver driver, String searchValue, String locator) {
         driver.findElement(By.xpath(locator)).sendKeys(searchValue);
         driver.findElement(By.xpath(locator)).sendKeys(Keys.ENTER);
