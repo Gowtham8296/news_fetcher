@@ -3,11 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Gowtham8296/news_fetcher.git'
-            }
-        }
+stage('Checkout') {
+    steps {
+        checkout([$class: 'GitSCM',
+            branches: [[name: '*/main']],
+            userRemoteConfigs: [[url: 'https://github.com/Gowtham8296/news_fetcher.git']]
+        ])
+    }
+}
+
 
         stage('Build') {
             steps {
