@@ -11,13 +11,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'  // 👈 Removed -DskipTests
+                sh 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                // 👇 Run TestNG tests and generate reports
                 sh 'mvn test'
             }
         }
@@ -25,12 +24,20 @@ pipeline {
         stage('Publish Reports') {
             steps {
                 echo 'Publishing Extent and TestNG Reports...'
+
                 publishHTML([
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
                     reportDir: 'target',
                     reportFiles: 'GoogleSearchReport.html',
                     reportName: 'Extent Report'
                 ])
+
                 publishHTML([
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
                     reportDir: 'test-output',
                     reportFiles: 'index.html',
                     reportName: 'TestNG Report'
@@ -41,7 +48,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline completed. Cleaning up workspace...'
+            echo 'Pipeline completed. Cleaning workspace...'
             cleanWs()
         }
     }
