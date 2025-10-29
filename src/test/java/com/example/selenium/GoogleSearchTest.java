@@ -47,8 +47,12 @@ public class GoogleSearchTest {
         Wait(driver,10,"//*[contains(text(),'Breaking News')]");
         click(driver,"//*[contains(text(),'Breaking News')]");
 
+        // After line 42
+        List<WebElement> maybeLaterBtn = driver.findElements(By.xpath("//*[@class='boxBtnWrap']//*[contains(text(),'Maybe later')]"));
+        if (!maybeLaterBtn.isEmpty()) {
+            maybeLaterBtn.get(0).click();
+        }
 
-        Wait(driver, 5, "//*[contains(text(),'Breaking News')]");
         Wait(driver, 3, "(//*[@class='CRKrj style_change edCaE'])[1]");
 
         List<WebElement> headlines = driver.findElements(
@@ -70,7 +74,7 @@ public class GoogleSearchTest {
 
     @AfterMethod
     public void tearDown() {
-        if(driver != null) driver.quit();
+//        if(driver != null) driver.quit();
     }
 
     @AfterClass
