@@ -1,20 +1,21 @@
 pipeline {
     agent any
-     tools {
-            maven 'Maven_3'
-        }
+
+    tools {
+        maven 'Maven_3'
+    }
 
     stages {
 
-stage('Checkout') {
-    steps {
-        checkout([$class: 'GitSCM',
-            branches: [[name: '*/main']],
-            userRemoteConfigs: [[url: 'https://github.com/Gowtham8296/news_fetcher.git']]
-        ])
-    }
-}
-
+        stage('Checkout') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/Gowtham8296/news_fetcher.git']]
+                ])
+            }
+        }
 
         stage('Build') {
             steps {
@@ -28,7 +29,7 @@ stage('Checkout') {
             }
         }
 
-        stage('Publish Reports') {
+        stage('Publish HTML Reports') {
             steps {
                 echo 'Publishing Extent and TestNG Reports...'
 
@@ -51,12 +52,12 @@ stage('Checkout') {
                 ])
             }
         }
-        stage('Publish Reports') {
+
+        stage('Publish JUnit Reports') {
             steps {
                 junit 'target/surefire-reports/*.xml'
             }
         }
-
     }
 
     post {
