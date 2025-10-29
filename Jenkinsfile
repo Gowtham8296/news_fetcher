@@ -4,6 +4,10 @@ pipeline {
     tools {
         maven 'Maven_3'
     }
+    triggers {
+            // Runs every day at 9 AM IST
+            cron('30 3 * * *')
+        }
 
     stages {
 
