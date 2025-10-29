@@ -27,11 +27,26 @@ pipeline {
 
     post {
         always {
-            // publish extent report
+            echo "Publishing Extent and TestNG Reports..."
+
+            // ✅ Extent Report
             publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
                 reportDir: 'target',
                 reportFiles: 'GoogleSearchReport.html',
                 reportName: 'Extent Report'
+            ])
+
+            // ✅ TestNG Report
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'test-output',
+                reportFiles: 'index.html',
+                reportName: 'TestNG Report'
             ])
         }
     }
