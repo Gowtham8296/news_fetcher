@@ -27,11 +27,14 @@ public class GoogleSearchTest {
     @BeforeMethod
     public void setupDriver() {
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless=new"); // headless mode for Jenkins
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         options.setExperimentalOption("useAutomationExtension", false);
         options.addArguments("--disable-infobars");
+
 
         driver = new ChromeDriver(options);
     }
