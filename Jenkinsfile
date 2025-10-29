@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
@@ -22,6 +22,17 @@ pipeline {
             steps {
                 sh 'mvn test -Dsurefire.suiteXmlFiles=testng.xml'
             }
+        }
+    }
+
+    post {
+        always {
+            // publish extent report
+            publishHTML([
+                reportDir: 'target',
+                reportFiles: 'GoogleSearchReport.html',
+                reportName: 'Extent Report'
+            ])
         }
     }
 }
