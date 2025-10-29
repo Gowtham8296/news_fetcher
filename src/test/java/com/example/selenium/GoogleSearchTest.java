@@ -29,7 +29,7 @@ public class GoogleSearchTest {
     public void setupDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+//        options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-blink-features=AutomationControlled");
@@ -57,7 +57,7 @@ public class GoogleSearchTest {
             maybeLaterBtn.get(0).click();
         }
 
-        Wait(driver, 3, "(//*[@class='CRKrj style_change edCaE'])[1]");
+        Wait(driver, 10, "(//*[@class='CRKrj style_change edCaE'])[1]");
 
         List<WebElement> headlines = driver.findElements(
                 By.xpath("(//*[@class='CRKrj style_change edCaE'])[position() <= 10]")
