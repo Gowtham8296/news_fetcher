@@ -18,6 +18,15 @@ pipeline {
             }
         }
 
+stage('Setup Chrome') {
+    steps {
+        sh '''
+            sudo apt-get update
+            sudo apt-get install -y chromium-browser chromium-chromedriver
+        '''
+    }
+}
+
         stage('Test') {
             steps {
                 sh 'mvn test -Dsurefire.suiteXmlFiles=testng.xml'
