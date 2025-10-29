@@ -60,10 +60,43 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            echo 'Pipeline completed. Cleaning workspace...'
-            cleanWs()
-        }
+     post {
+            always {
+                echo 'Pipeline completed. Cleaning workspace...'
+            }
+
+            success {
+                emailext(
+                    to: 'youremail@gmail.com',
+                    subject: "✅ SUCCESS: Jenkins Build #${env.BUILD_NUMBER}",
+                    body: """
+                    <h3>Build Successful 🎉</h3>
+                    <p>Project: ${env.JOB_NAME}</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p>View reports below:</p>
+                    <ul>
+                        <li><a href="${env.BUILD_URL}HTML_20Report/">Extent Report</a></li>
+                        <li><a href="${env.BUILD_URL}TestNG_20Report/">TestNG Report</a></li>
+                    </ul>
+                    """,
+                    mimeType: 'text/html'
+                )
+                cleanWs()
+            }
+
+            failure {
+                emailext(
+                    to: 'youremail@gmail.com',
+                    subject: "❌ FAILURE: Jenkins Build #${env.BUILD_NUMBER}",
+                    body: """
+                    <h3>Build Failed 💥</h3>
+                    <p>Project: ${env.JOB_NAME}</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p><a href="${env.BUILD_URL}console">View Console Output</a></p>
+                    """,
+                    mimeType: 'text/html'
+                )
+                cleanWs()
+            }
     }
 }
